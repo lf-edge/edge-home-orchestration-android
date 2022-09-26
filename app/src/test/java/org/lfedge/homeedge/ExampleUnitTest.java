@@ -15,7 +15,6 @@
 
  */
 
-
 package org.lfedge.homeedge;
 
 import org.junit.Test;

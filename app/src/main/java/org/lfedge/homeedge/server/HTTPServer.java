@@ -1,9 +1,5 @@
 /****************************************************************************
-<<<<<<< HEAD
  Copyright 2022 Samsung Electronics All Rights Reserved.
-=======
- Copyright 2022-2023 Samsung Electronics All Rights Reserved.
->>>>>>> c20e4964656c701ebbb201cad2e36498d7b4bd75
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
