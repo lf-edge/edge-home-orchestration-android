@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /****************************************************************************
  Copyright 2022 Samsung Electronics All Rights Reserved.
 
@@ -16,8 +15,6 @@
 
  */
 
-=======
->>>>>>> c20e4964656c701ebbb201cad2e36498d7b4bd75
 package org.lfedge.homeedge;
 
 import android.content.Context;
