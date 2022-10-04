@@ -34,4 +34,6 @@ public interface Api {
     Call<Response.ScoreResponse> getScoreInfo(@Url String url,@Body JsonObject device, @Query("id") String deviceId);
     @POST
     Call<Response.ServiceResponse> ExecuteService(@Url String url,@Body JsonObject Servicedata, @Query("Object")ServiceInfo serviceInfo);
+    @GET
+    Call<String>getPing(@Url String url,@Query("url") String path);
 }

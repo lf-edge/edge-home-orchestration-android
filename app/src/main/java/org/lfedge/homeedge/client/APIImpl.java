@@ -129,4 +129,19 @@ public class APIImpl {
         }
         return status;
     }
+    public String getPing(String url) throws InterruptedException {
+        String resp = null;
+        Call<String> call = Client.getInstance().getMyApi().getPing(url,url);
+
+        try {
+            retrofit2.Response<String> pingResponse = call.execute();
+            if(pingResponse.isSuccessful()){
+                Log.d(TAG,pingResponse.body().toString());
+                resp = pingResponse.body().toString();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resp;
+    }
 }
