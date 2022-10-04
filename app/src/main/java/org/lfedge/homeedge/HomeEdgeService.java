@@ -27,16 +27,22 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import org.lfedge.homeedge.common.RoundTripTime;
 import org.lfedge.homeedge.common.Utils;
 import org.lfedge.homeedge.server.HTTPServer;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class HomeEdgeService extends Service {
     public static final String TAG="HomeEdgeService";
     public static Context mContext;
     NsdHelper mNsdHelperHelper;
     HTTPServer httpServer;
+    ScheduledFuture mRTTSchedule;
     private BroadcastReceiver broadcastReceiverNetworkState;
     private final IBinder mBinder = new LocalBinder();
     public class LocalBinder extends Binder {
@@ -118,6 +124,9 @@ public class HomeEdgeService extends Service {
         //Not required so commented
         // mNsdHelperHelper.registerService(Utils.API.PORT);
         mNsdHelperHelper.discoverServices();
+        ScheduledExecutorService rttExecutor = Executors.newScheduledThreadPool(1);
+        mRTTSchedule = rttExecutor.scheduleAtFixedRate(new RoundTripTime(this), 1, 15, TimeUnit.SECONDS);
+
         return START_NOT_STICKY;
     }
 
@@ -134,6 +143,8 @@ public class HomeEdgeService extends Service {
             mNsdHelperHelper.tearDown();
             mNsdHelperHelper = null;
         }
+        if(mRTTSchedule!=null)
+            mRTTSchedule.cancel(true);
 
     }
 

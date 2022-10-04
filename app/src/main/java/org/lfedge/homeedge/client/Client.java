@@ -17,6 +17,9 @@
 
 package org.lfedge.homeedge.client;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.lfedge.homeedge.common.Utils;
 
 import retrofit2.Retrofit;
@@ -27,8 +30,11 @@ public class Client {
     private final Api myApi;
 
     private Client() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Utils.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         myApi = retrofit.create(Api.class);
     }
