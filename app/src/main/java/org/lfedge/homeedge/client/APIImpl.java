@@ -58,7 +58,7 @@ public class APIImpl {
                     Response.OrchestrationResponse device = response.body();
                     if(device!= null){
                     Log.d(TAG,"Device Platform: "+device.getPlatform() + " ExecutionType:"+device.getExecutionType());
-                        if(!device.getServiceList().isEmpty()) {
+                        if(device.getServiceList()!=null && !device.getServiceList().isEmpty()) {
                             Log.d(TAG,"Updating with service List");
                             DeviceDatabase.databaseWriterExecutor.execute(() -> DeviceDatabase.getDatabase(mContext).
                                     deviceDao().update(deviceID, device.getServiceList()));
@@ -84,7 +84,7 @@ public class APIImpl {
             JsonObject gsonObject = (JsonObject) jsonParser.parse(object.toString());
             Call<Response.ScoreResponse> call = Client.getInstance().getMyApi().getScoreInfo(url,gsonObject,deviceID);
             retrofit2.Response<Response.ScoreResponse> scoreResponse = call.execute();
-            if(scoreResponse.isSuccessful() && scoreResponse.body().getScore()!=null){
+            if(scoreResponse.isSuccessful() && scoreResponse.body()!=null && scoreResponse.body().getScore()!=null){
                 score = scoreResponse.body().getScore();
                 Log.d(TAG,"The score obtained is " + score);
 
@@ -113,12 +113,12 @@ public class APIImpl {
             Call<Response.ServiceResponse> call = Client.getInstance().getMyApi().ExecuteService(url,gsonObject, serviceInfo);
 
             retrofit2.Response<Response.ServiceResponse> serviceResponse = call.execute();
-            if(serviceResponse.isSuccessful() && serviceResponse.body().getStatus()!=null){
+            if(serviceResponse.isSuccessful() && serviceResponse.body()!=null && serviceResponse.body().getStatus()!=null){
                 Log.d(TAG,"Received the response!!!" +serviceResponse.body().getStatus());
                 status = serviceResponse.body().getStatus();
             }else{
                 Log.e(TAG,"Error in API call ");
-                if(serviceResponse.errorBody().toString()!=null)
+                if(serviceResponse.errorBody()!=null)
                     status = serviceResponse.errorBody().string();
                 else
                     status = Utils.RESPONSE.NULL_RESPONSE;
